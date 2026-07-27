@@ -1,0 +1,255 @@
+/* Tema escuro (§7). Os marcadores @nome são substituídos em ui/theme.py,
+   de modo que a paleta exista em um lugar só. */
+
+QWidget {
+    background-color: @background;
+    color: @text;
+}
+
+QMainWindow,
+QDialog {
+    background-color: @background;
+}
+
+/* ------------------------------------------------------------- editor */
+
+QPlainTextEdit {
+    background-color: @editor_bg;
+    color: @editor_fg;
+    border: none;
+    selection-background-color: @selection_bg;
+    selection-color: @selection_fg;
+}
+
+/* --------------------------------------------------------------- menus */
+
+QMenuBar {
+    background-color: @surface;
+    color: @text;
+    border-bottom: 1px solid @border;
+}
+
+QMenuBar::item {
+    background: transparent;
+    padding: 5px 10px;
+}
+
+QMenuBar::item:selected,
+QMenuBar::item:pressed {
+    background-color: @selection_bg;
+    color: @selection_fg;
+}
+
+QMenu {
+    background-color: @surface;
+    color: @text;
+    border: 1px solid @border;
+    padding: 4px;
+}
+
+QMenu::item {
+    padding: 5px 28px 5px 22px;
+    border-radius: 3px;
+}
+
+QMenu::item:selected {
+    background-color: @selection_bg;
+    color: @selection_fg;
+}
+
+QMenu::item:disabled {
+    color: @text_dim;
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: @border;
+    margin: 4px 8px;
+}
+
+/* --------------------------------------------------- barra de status */
+
+QStatusBar {
+    background-color: @surface;
+    color: @text;
+    border-top: 1px solid @border;
+}
+
+QStatusBar QLabel {
+    background: transparent;
+    padding: 0 4px;
+}
+
+QStatusBar::item {
+    border: none;
+}
+
+#statusFile {
+    color: @text_dim;
+}
+
+/* --------------------------------------- busca e substituição (§24) */
+
+#searchBar {
+    background-color: @surface;
+    border-top: 1px solid @border;
+}
+
+QLineEdit {
+    background-color: @surface_alt;
+    color: @text;
+    border: 1px solid @border;
+    border-radius: 3px;
+    padding: 4px 6px;
+    selection-background-color: @selection_bg;
+    selection-color: @selection_fg;
+}
+
+QLineEdit:focus {
+    border: 1px solid @accent;
+}
+
+QLineEdit[noMatch="true"] {
+    border: 1px solid @error;
+}
+
+QPushButton,
+QToolButton {
+    background-color: @surface_alt;
+    color: @text;
+    border: 1px solid @border;
+    border-radius: 3px;
+    padding: 4px 10px;
+}
+
+QPushButton:hover,
+QToolButton:hover {
+    background-color: @border;
+}
+
+QPushButton:pressed,
+QToolButton:pressed {
+    background-color: @selection_bg;
+}
+
+QPushButton:disabled {
+    color: @text_dim;
+    border-color: @surface_alt;
+}
+
+QPushButton:default {
+    border: 1px solid @accent;
+}
+
+QCheckBox {
+    background: transparent;
+    spacing: 6px;
+}
+
+QCheckBox::indicator {
+    width: 13px;
+    height: 13px;
+    border: 1px solid @border;
+    border-radius: 3px;
+    background-color: @surface_alt;
+}
+
+QCheckBox::indicator:checked {
+    background-color: @accent;
+    border-color: @accent;
+}
+
+QLabel {
+    background: transparent;
+}
+
+/* ------------------------------------------------ barras de rolagem */
+
+QScrollBar:vertical {
+    background-color: @editor_bg;
+    width: 12px;
+    margin: 0;
+}
+
+QScrollBar:horizontal {
+    background-color: @editor_bg;
+    height: 12px;
+    margin: 0;
+}
+
+QScrollBar::handle:vertical,
+QScrollBar::handle:horizontal {
+    background-color: @border;
+    border-radius: 5px;
+    min-height: 24px;
+    min-width: 24px;
+    margin: 2px;
+}
+
+QScrollBar::handle:vertical:hover,
+QScrollBar::handle:horizontal:hover {
+    background-color: @text_dim;
+}
+
+QScrollBar::add-line,
+QScrollBar::sub-line {
+    height: 0;
+    width: 0;
+}
+
+QScrollBar::add-page,
+QScrollBar::sub-page {
+    background: transparent;
+}
+
+/* ------------------------------------------------ diálogos e listas */
+
+QMessageBox,
+QFileDialog {
+    background-color: @background;
+}
+
+QMessageBox QLabel {
+    color: @text;
+}
+
+QAbstractItemView {
+    background-color: @surface_alt;
+    color: @text;
+    border: 1px solid @border;
+    selection-background-color: @selection_bg;
+    selection-color: @selection_fg;
+    outline: none;
+}
+
+QHeaderView::section {
+    background-color: @surface;
+    color: @text_dim;
+    border: none;
+    border-right: 1px solid @border;
+    border-bottom: 1px solid @border;
+    padding: 4px;
+}
+
+QComboBox {
+    background-color: @surface_alt;
+    color: @text;
+    border: 1px solid @border;
+    border-radius: 3px;
+    padding: 3px 6px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: @surface;
+}
+
+QToolTip {
+    background-color: @surface;
+    color: @text;
+    border: 1px solid @border;
+    padding: 3px;
+}
+
+QSplitter::handle {
+    background-color: @border;
+}

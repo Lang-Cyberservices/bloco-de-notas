@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Bloco de Notas
+GenericName=Editor de texto
+Comment=Editor de texto simples com salvamento automático e recuperação
+Exec=__EXEC__ %f
+Icon=bloco-de-notas
+Terminal=false
+Categories=Utility;TextEditor;
+MimeType=text/plain;
+Keywords=texto;editor;notas;bloco;
+StartupNotify=true
+StartupWMClass=bloco-de-notas

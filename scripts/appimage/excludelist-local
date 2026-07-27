@@ -1,0 +1,17 @@
+# Exclusões próprias deste projeto, somadas à excludelist oficial.
+#
+# libdbus-1.so.3
+#   A libdbus do Debian é ligada à libsystemd, que puxa libgcrypt, que puxa
+#   libgpg-error — e esta última está na lista oficial porque embarcá-la causa
+#   erro de relocação. Embarcar a libdbus arrastava a cadeia inteira e quebrava
+#   o AppImage na Fedora ("libgpg-error.so.0 => not found").
+#   Deixar que venha do host é seguro: D-Bus existe em qualquer desktop Linux,
+#   e o KDE não inicia sem ele.
+#
+# libsystemd.so.0 / libgcrypt.so.20
+#   Só estavam presentes por causa da libdbus. A libsystemd, em particular, é
+#   acoplada à versão do systemd do sistema e nunca deve ser embarcada.
+#
+libdbus-1.so.3
+libsystemd.so.0
+libgcrypt.so.20

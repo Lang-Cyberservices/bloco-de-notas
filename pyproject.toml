@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bloco-de-notas"
+version = "0.1.0"
+description = "Editor de texto simples para Linux, com salvamento automático e recuperação persistente"
+readme = "README.md"
+requires-python = ">=3.12"
+# Essentials basta: o código usa apenas QtCore, QtGui, QtWidgets e QtNetwork.
+# O pacote PySide6 completo arrasta Qt3D, multimídia e WebEngine — 649 MB
+# contra ~100 MB — sem nada que este editor utilize.
+dependencies = ["PySide6-Essentials>=6.9"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-qt>=4.4"]
+
+[project.scripts]
+bloco-de-notas = "bloco_de_notas.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bloco_de_notas"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
