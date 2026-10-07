@@ -89,7 +89,7 @@ def launch(qapp, qtbot):
 
     for editor in created:
         # Impede que temporizadores de autosave sobrevivam ao teste.
-        editor.service.autosave.cancel_pending()
+        editor.service.cancel_all_pending()
 
 
 @pytest.fixture

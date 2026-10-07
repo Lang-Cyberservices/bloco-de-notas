@@ -75,9 +75,10 @@ Depois disso o aplicativo aparece no menu e em "Abrir com" para arquivos `.txt`.
 | Você para de digitar por 0,5 s | O texto vai para a recuperação |
 | Você digita sem parar | Uma gravação de segurança a cada 5 s |
 | Você fecha no `X` ou usa `Ctrl+Q` | Salva a recuperação e sai, sem perguntar |
-| Você reabre o aplicativo | O último documento volta com cursor e rolagem |
+| Você reabre o aplicativo | Todas as abas voltam, cada uma com cursor e rolagem |
 | `Ctrl+S` falha (disco cheio, sem permissão) | O texto continua no editor e a recuperação anterior continua válida |
-| `Novo` ou `Fechar documento` | Aí sim pergunta: Salvar / Não salvar / Cancelar |
+| `Novo` ou `Abrir` | Abre em uma aba nova; os outros documentos continuam abertos |
+| `✕` da aba ou `Fechar documento` | Aí sim pergunta: Salvar / Não salvar / Cancelar |
 
 O autosave **nunca grava no seu arquivo**: só `Ctrl+S` faz isso. Assim o arquivo
 em disco nunca muda sem você mandar, e mesmo assim nada se perde.
@@ -109,6 +110,7 @@ ou anos. Uma recuperação só é apagada quando você escolhe explicitamente
 | Salvar como | `Ctrl+Shift+S` | | Diminuir fonte | `Ctrl+-` |
 | Fechar documento | `Ctrl+W` | | Restaurar fonte | `Ctrl+0` |
 | Sair | `Ctrl+Q` | | Desfazer / Refazer | `Ctrl+Z` / `Ctrl+Shift+Z` |
+| Próxima aba | `Ctrl+Tab` | | Aba anterior | `Ctrl+Shift+Tab` |
 
 `Ctrl` + roda do mouse também muda o tamanho da fonte (8 a 40 px).
 

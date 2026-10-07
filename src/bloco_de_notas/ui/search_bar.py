@@ -90,6 +90,18 @@ class SearchBar(QWidget):
 
         self.hide()
 
+    def set_editor(self, editor: TextEditor) -> None:
+        """Passa a procurar em outro editor (o usuário trocou de aba)."""
+        if editor is self._editor:
+            return
+        try:
+            self._editor.set_search_selections([])
+        except RuntimeError:
+            pass  # o editor anterior já foi destruído junto com a aba
+        self._editor = editor
+        if self.isVisible():
+            self._highlight_all()
+
     # ------------------------------------------------------------ abrir/fechar
 
     def show_find(self) -> None:

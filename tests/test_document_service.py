@@ -1,4 +1,8 @@
-"""§34.4 a §34.6, §34.8 e §34.11 — fluxos de `Novo`, `Salvar` e erro de escrita."""
+"""§34.4 a §34.6, §34.8 e §34.11 — fechar documento, `Salvar` e erro de escrita.
+
+Com abas, `Novo` e `Abrir` não substituem nada; a pergunta "Salvar / Não salvar
+/ Cancelar" destes fluxos acontece ao fechar a aba.
+"""
 
 from __future__ import annotations
 
@@ -14,7 +18,7 @@ from bloco_de_notas.services.dialogs import SaveChoice
 from conftest import type_text
 
 
-def test_novo_salvar_grava_e_cria_documento_vazio(qtbot, editor_app, paths, tmp_path):
+def test_fechar_salvar_grava_e_deixa_documento_vazio(qtbot, editor_app, paths, tmp_path):
     """§34.4"""
     dialogs = editor_app.dialogs
     destino = tmp_path / "salvo.txt"
@@ -24,7 +28,7 @@ def test_novo_salvar_grava_e_cria_documento_vazio(qtbot, editor_app, paths, tmp_
 
     dialogs.save_choice = SaveChoice.SAVE
     dialogs.save_path = destino
-    assert editor_app.service.new_document()
+    assert editor_app.service.close_document()
 
     assert destino.read_text(encoding="utf-8") == "conteudo a salvar"
     # §11.3: a recuperação some só depois do salvamento bem-sucedido.
@@ -36,7 +40,7 @@ def test_novo_salvar_grava_e_cria_documento_vazio(qtbot, editor_app, paths, tmp_
     assert editor_app.window.editor.toPlainText() == ""
 
 
-def test_novo_nao_salvar_apaga_o_temporario(qtbot, editor_app, paths):
+def test_fechar_nao_salvar_apaga_o_temporario(qtbot, editor_app, paths):
     """§34.5"""
     type_text(qtbot, editor_app, "sera descartado")
     editor_app.service.flush_recovery()
@@ -44,7 +48,7 @@ def test_novo_nao_salvar_apaga_o_temporario(qtbot, editor_app, paths):
     assert (paths.recovery_dir / f"{anterior}.txt").exists()
 
     editor_app.dialogs.save_choice = SaveChoice.DISCARD
-    assert editor_app.service.new_document()
+    assert editor_app.service.close_document()
 
     assert not (paths.recovery_dir / f"{anterior}.txt").exists()
     assert not (paths.recovery_dir / f"{anterior}.json").exists()
@@ -52,14 +56,14 @@ def test_novo_nao_salvar_apaga_o_temporario(qtbot, editor_app, paths):
     assert editor_app.window.editor.toPlainText() == ""
 
 
-def test_novo_cancelar_nao_muda_nada(qtbot, editor_app, paths):
+def test_fechar_cancelar_nao_muda_nada(qtbot, editor_app, paths):
     """§34.6"""
     type_text(qtbot, editor_app, "intocado")
     editor_app.service.flush_recovery()
     anterior = editor_app.service.document.id
 
     editor_app.dialogs.save_choice = SaveChoice.CANCEL
-    assert editor_app.service.new_document() is False
+    assert editor_app.service.close_document() is False
 
     assert editor_app.service.document.id == anterior
     assert (paths.recovery_dir / f"{anterior}.txt").exists()
@@ -74,7 +78,7 @@ def test_cancelar_salvar_como_mantem_o_documento_aberto(qtbot, editor_app, paths
     editor_app.dialogs.save_choice = SaveChoice.SAVE
     editor_app.dialogs.save_path = None  # usuário cancelou o seletor de arquivos
 
-    assert editor_app.service.new_document() is False
+    assert editor_app.service.close_document() is False
 
     assert editor_app.service.document.id == anterior
     assert editor_app.window.editor.toPlainText() == "nao pode sumir"
@@ -85,7 +89,7 @@ def test_cancelar_salvar_como_mantem_o_documento_aberto(qtbot, editor_app, paths
 
 def test_documento_vazio_nao_pergunta(editor_app):
     """§16.4"""
-    assert editor_app.service.new_document()
+    assert editor_app.service.close_document()
     assert editor_app.dialogs.questions == []
 
 
@@ -155,10 +159,10 @@ def test_falha_ao_abrir_nao_substitui_o_documento_atual(qtbot, editor_app, tmp_p
     type_text(qtbot, editor_app, "documento atual")
     anterior = editor_app.service.document.id
 
-    editor_app.dialogs.save_choice = SaveChoice.DISCARD
     assert editor_app.service.open_path(tmp_path / "inexistente.txt") is False
 
     assert editor_app.service.document.id == anterior
+    assert len(editor_app.service.documents) == 1
     assert editor_app.window.editor.toPlainText() == "documento atual"
     assert editor_app.dialogs.errors
 

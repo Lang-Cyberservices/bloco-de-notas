@@ -21,6 +21,55 @@ QPlainTextEdit {
     selection-color: @selection_fg;
 }
 
+/* ---------------------------------------------------------------- abas */
+
+QTabWidget::pane {
+    border: none;
+}
+
+QTabBar {
+    background-color: @surface_alt;
+}
+
+QTabBar::tab {
+    background-color: @surface_alt;
+    color: @text_dim;
+    border: none;
+    border-right: 1px solid @border;
+    border-top: 2px solid transparent;
+    padding: 5px 6px 5px 12px;
+    min-width: 90px;
+}
+
+QTabBar::tab:hover {
+    background-color: @surface;
+    color: @text;
+}
+
+QTabBar::tab:selected {
+    background-color: @editor_bg;
+    color: @text;
+    border-top: 2px solid @accent;
+}
+
+QToolButton#tabClose {
+    background-color: transparent;
+    color: @text_dim;
+    border: none;
+    border-radius: 3px;
+    padding: 1px 5px;
+    margin-left: 6px;
+}
+
+QToolButton#tabClose:hover {
+    background-color: @border;
+    color: @text;
+}
+
+QToolButton#tabClose:pressed {
+    background-color: @selection_bg;
+}
+
 /* --------------------------------------------------------------- menus */
 
 QMenuBar {

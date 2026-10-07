@@ -52,7 +52,12 @@ O aplicativo deve permitir:
 - Reabrir automaticamente o último documento aberto.
 - Abrir arquivos por argumento de linha de comando.
 
-Inicialmente, o aplicativo trabalhará com somente um documento aberto por vez.
+O aplicativo trabalha com vários documentos abertos em abas, como um navegador:
+`Novo` e `Abrir` criam uma aba em vez de substituir o documento atual, e um
+documento só é fechado quando o usuário fecha a aba dele (`✕` da aba ou
+`Fechar documento`). As regras de confirmação, recuperação e restauração
+descritas a seguir valem para cada aba; ao reabrir o aplicativo, todas as abas
+voltam.
 
 ---
 

@@ -7,7 +7,7 @@ interface da lógica de persistência).
 
 from __future__ import annotations
 
-from PySide6.QtCore import QRect, Qt, Signal
+from PySide6.QtCore import QRect, Qt, QTimer, Signal
 from PySide6.QtGui import (
     QColor,
     QFont,
@@ -50,6 +50,8 @@ class TextEditor(QPlainTextEdit):
         self._font_size = DEFAULT_FONT_SIZE
         self._font_family = preferred_monospace_family()
         self._search_selections: list[QTextEdit.ExtraSelection] = []
+        #: rolagem a restaurar quando o editor for exibido pela primeira vez
+        self._pending_scroll: int | None = None
 
         self.setLineWrapMode(QPlainTextEdit.LineWrapMode.NoWrap)
         self.setTabChangesFocus(False)
@@ -248,9 +250,33 @@ class TextEditor(QPlainTextEdit):
         self.setTextCursor(cursor)
 
     def scroll_position(self) -> int:
+        if self._pending_scroll is not None:
+            return self._pending_scroll
         return self.verticalScrollBar().value()
 
+    def restore_scroll_position(self, position: int) -> None:
+        """Restaura a rolagem assim que o texto tiver layout.
+
+        Antes de o editor ser exibido o scrollbar ainda tem alcance 0, e uma
+        aba restaurada pode nunca ser visitada: até lá, `scroll_position()`
+        continua devolvendo o valor guardado, para que ele não se perca.
+        """
+        self._pending_scroll = int(position) or None
+        if self.isVisible():
+            QTimer.singleShot(0, self._apply_pending_scroll)
+
+    def _apply_pending_scroll(self) -> None:
+        if self._pending_scroll is None:
+            return
+        self.set_scroll_position(self._pending_scroll)
+
+    def showEvent(self, event) -> None:
+        super().showEvent(event)
+        if self._pending_scroll is not None:
+            QTimer.singleShot(0, self._apply_pending_scroll)
+
     def set_scroll_position(self, position: int) -> None:
+        self._pending_scroll = None
         bar = self.verticalScrollBar()
         bar.setValue(max(bar.minimum(), min(int(position), bar.maximum())))
 

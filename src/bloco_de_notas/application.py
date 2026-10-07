@@ -79,5 +79,5 @@ class EditorApplication:
         window.raise_()
         window.activateWindow()
         if payload:
-            # Passa pelo fluxo de confirmação normal antes de trocar o documento.
+            # Abre em uma aba nova; os documentos já abertos não são tocados.
             self.service.open_cli_path(Path(payload))
